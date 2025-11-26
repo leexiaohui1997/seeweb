@@ -4,3 +4,8 @@ body {
   font-size: $font-size-base;
   color: $text-color-base;
 }
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+}

@@ -2,14 +2,18 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: ['@sidebase/nuxt-session'],
+  modules: ['@sidebase/nuxt-session', '@element-plus/nuxt'],
   session: {
     session: {
       expiresIn: 5 * 60, // 5 分钟过期
     },
   },
 
-  css: ['~/assets/scss/base.scss', 'element-plus/dist/index.css'],
+  elementPlus: {
+    importStyle: 'scss',
+  },
+
+  css: ['~/assets/scss/base.scss'],
 
   runtimeConfig: {
     // 私有配置（仅在服务端可用）

@@ -5,3 +5,13 @@ $text-color-base: #333;
 $font-size-base: 14px;
 
 $font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+$--colors: (
+  primary: (
+    base: $primary-color,
+  ),
+);
+
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: $--colors
+);
