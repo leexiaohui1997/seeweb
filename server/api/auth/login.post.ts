@@ -68,23 +68,22 @@ export default defineEventHandler(async event => {
     }
 
     // 生成 JWT Token
-    const token = generateToken({
+    const token = await generateToken({
       userId: user.id,
       username: user.username,
       isAdmin: user.isAdmin,
     })
 
+    setCookie(event, 'token', token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 7 * 24 * 60 * 60, // 7 天
+      path: '/',
+    })
+
     return {
       success: true,
       message: '登录成功',
-      data: {
-        token,
-        user: {
-          id: user.id,
-          username: user.username,
-          isAdmin: user.isAdmin,
-        },
-      },
     }
   } catch (error: any) {
     // 如果是我们创建的错误，直接抛出
