@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: ['@sidebase/nuxt-session', '@element-plus/nuxt'],
+  modules: ['@sidebase/nuxt-session', '@element-plus/nuxt', '@pinia/nuxt'],
   session: {
     session: {
       expiresIn: 5 * 60, // 5 分钟过期

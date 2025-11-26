@@ -45,6 +45,8 @@ definePageMeta({
   layout: 'login',
 })
 
+const { fetchUser } = await useUser()
+
 const router = useRouter()
 
 const formValues = reactive({
@@ -114,7 +116,7 @@ const handleSubmit = async () => {
 
     ElMessage.success(response.message)
     disabled.value = true
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await fetchUser()
     router.replace({ path: '/' })
   } catch (error) {
     ElMessage.error(getErrorMessage(error))
