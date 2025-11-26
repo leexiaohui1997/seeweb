@@ -19,7 +19,7 @@
 const { data, pending, error } = await useFetch('/api/test-db')
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -28,7 +28,7 @@ const { data, pending, error } = await useFetch('/api/test-db')
 }
 
 h1 {
-  color: #42b983;
+  color: $primary-color;
   margin-bottom: 1rem;
 }
 

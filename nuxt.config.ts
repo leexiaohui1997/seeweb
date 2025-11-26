@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['element-plus/dist/index.css'],
+  css: ['~/assets/scss/base.scss', 'element-plus/dist/index.css'],
 
   runtimeConfig: {
     // 私有配置（仅在服务端可用）
@@ -25,6 +25,17 @@ export default defineNuxtConfig({
     // 公共配置（客户端和服务端都可用）
     public: {
       // 可以在这里添加公共配置
+    },
+  },
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData:
+            '@use "~/assets/scss/_variables.scss" as *; @use "~/assets/scss/_mixins.scss" as *;',
+        },
+      },
     },
   },
 })
