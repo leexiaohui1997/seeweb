@@ -1,5 +1,5 @@
 import { initUserModel, User } from '~/server/models/User'
-import { comparePassword } from '~/server/utils/password'
+import { comparePassword } from '~/shared/utils/password'
 import { generateToken } from '~/server/utils/jwt'
 
 // 初始化模型

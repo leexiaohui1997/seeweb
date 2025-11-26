@@ -1,5 +1,5 @@
 import { initUserModel, User } from '~/server/models/User'
-import { hashPassword, validatePasswordStrength } from '~/server/utils/password'
+import { hashPassword, validatePasswordStrength } from '~/shared/utils/password'
 
 // 初始化模型
 initUserModel()
