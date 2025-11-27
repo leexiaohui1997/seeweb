@@ -12,10 +12,10 @@
       <el-input v-model="formValues.username" />
     </el-form-item>
     <el-form-item label="密码" prop="password">
-      <el-input v-model="formValues.password" type="password" />
+      <el-input v-model="formValues.password" type="password" show-password />
     </el-form-item>
     <el-form-item label="确认密码" prop="confirmPassword">
-      <el-input v-model="formValues.confirmPassword" type="password" />
+      <el-input v-model="formValues.confirmPassword" type="password" show-password />
     </el-form-item>
   </el-form>
 

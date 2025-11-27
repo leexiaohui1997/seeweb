@@ -12,7 +12,7 @@
       <el-input v-model="formValues.username" />
     </el-form-item>
     <el-form-item label="密码" prop="password">
-      <el-input v-model="formValues.password" type="password" />
+      <el-input v-model="formValues.password" type="password" show-password />
     </el-form-item>
     <el-form-item label="验证码" prop="captcha">
       <div class="captcha-wrapper">
