@@ -31,7 +31,7 @@ export default defineEventHandler(async event => {
       })
     }
 
-    const { page, pageSize, id, title, startTime, endTime } = validationResult.data
+    const { page, pageSize, name, title, startTime, endTime } = validationResult.data
 
     // 构建查询条件
     const where: any = {
@@ -39,9 +39,9 @@ export default defineEventHandler(async event => {
       deletedAt: null, // 只查询未删除的应用
     }
 
-    // 应用ID筛选
-    if (id) {
-      where.id = id
+    // 应用标识精确匹配
+    if (name) {
+      where.name = name
     }
 
     // 标题模糊搜索

@@ -33,11 +33,7 @@ export const listAppsSchema = z.object({
     .optional()
     .transform(val => (val ? parseInt(val, 10) : 10))
     .pipe(z.number().int().min(1, '每页数量必须大于 0').max(100, '每页数量不能超过 100')),
-  id: z
-    .string()
-    .optional()
-    .transform(val => (val ? parseInt(val, 10) : undefined))
-    .pipe(z.number().int().positive().optional()),
+  name: z.string().optional(),
   title: z.string().optional(),
   startTime: z
     .string()

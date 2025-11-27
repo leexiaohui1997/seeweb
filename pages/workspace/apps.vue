@@ -3,10 +3,10 @@
     <!-- 筛选区 -->
     <el-card class="filter-section" shadow="never">
       <el-form :model="filterForm" inline>
-        <el-form-item label="应用ID">
+        <el-form-item label="应用标识">
           <el-input
-            v-model.number="filterForm.id"
-            placeholder="请输入应用ID"
+            v-model="filterForm.name"
+            placeholder="请输入应用标识"
             clearable
             style="width: 200px"
             @keyup.enter="handleSearch"
@@ -143,7 +143,7 @@ const total = ref(0)
 
 // 筛选表单
 const filterForm = reactive({
-  id: undefined as number | undefined,
+  name: '',
   title: '',
   startTime: undefined as number | undefined,
   endTime: undefined as number | undefined,
@@ -213,8 +213,8 @@ const fetchApps = async () => {
       pageSize: pagination.pageSize.toString(),
     }
 
-    if (filterForm.id) {
-      query.id = filterForm.id.toString()
+    if (filterForm.name) {
+      query.name = filterForm.name
     }
 
     if (filterForm.title) {
@@ -273,7 +273,7 @@ const handleSearch = () => {
 
 // 重置
 const handleReset = () => {
-  filterForm.id = undefined
+  filterForm.name = ''
   filterForm.title = ''
   filterForm.startTime = undefined
   filterForm.endTime = undefined
