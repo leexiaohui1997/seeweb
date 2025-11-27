@@ -1,12 +1,14 @@
 import { verifyToken } from '~/server/utils/jwt'
 import { initUserModel, User } from '~/server/models/User'
+import { initAppModel } from '~/server/models/App'
 import { initModelAssociations } from '~/server/models/index'
 
 // 配置需要鉴权的路由（参考前端实现方式）
-const authRoutes = [/^\/api\/user(\/.)*$/]
+const authRoutes = [/^\/api\/user(\/.*)*$/]
 
-// 初始化用户模型和关联关系
+// 初始化所有模型和关联关系
 initUserModel()
+initAppModel()
 initModelAssociations()
 
 /**

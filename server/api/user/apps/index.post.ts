@@ -32,22 +32,9 @@ export default defineEventHandler(async event => {
 
     const { name, title } = validationResult.data
 
-    // 检查应用标识是否已存在（只检查未删除的记录）
-    const existingApp = await App.findOne({
-      where: {
-        name,
-        deletedAt: null,
-      },
-    })
-
-    if (existingApp) {
-      throw createError({
-        statusCode: 400,
-        message: '应用标识已存在',
-      })
-    }
-
     // 创建应用
+    // 注意：数据库级别的部分唯一索引会确保未删除的应用 name 唯一性
+    // 已删除的应用不会影响新应用的创建（因为部分索引只对 deleted_at IS NULL 的记录生效）
     const app = await App.create({
       name,
       title,

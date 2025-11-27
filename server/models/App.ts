@@ -38,7 +38,6 @@ export function initAppModel(): void {
       name: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        unique: true,
         validate: {
           len: [3, 50],
           is: /^[a-zA-Z0-9_]+$/, // 只允许字母、数字、下划线

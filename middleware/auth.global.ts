@@ -1,4 +1,4 @@
-const authRoutes = [/^\/workspace(\/.)*$/]
+const authRoutes = [/^\/workspace(\/.*)*$/]
 
 export default defineNuxtRouteMiddleware(async to => {
   // 只对需要鉴权的页面进行鉴权

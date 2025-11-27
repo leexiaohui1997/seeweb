@@ -13,7 +13,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING(50),
         allowNull: false,
-        unique: true,
       },
       title: {
         type: Sequelize.STRING(100),
@@ -49,7 +48,6 @@ module.exports = {
     // 添加索引
     await queryInterface.addIndex('apps', ['name'], {
       name: 'idx_apps_name',
-      unique: true,
     })
 
     await queryInterface.addIndex('apps', ['user_id'], {

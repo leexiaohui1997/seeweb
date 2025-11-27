@@ -24,6 +24,7 @@
     "@pinia/nuxt": "^0.11.3",
     "@sidebase/nuxt-session": "^0.2.8",
     "bcryptjs": "^3.0.3",
+    "dayjs": "^1.11.19",
     "element-plus": "^2.11.8",
     "jose": "^5.9.6",
     "mysql2": "^3.9.0",
