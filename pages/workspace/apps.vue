@@ -443,7 +443,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 .apps-page {
   padding: 20px;
-  min-height: 100%;
 
   // CSS 变量：应用卡片宽度
   --app-card-width: 300px;

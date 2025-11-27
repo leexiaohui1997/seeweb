@@ -481,7 +481,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 .assets-page {
   padding: 20px;
-  min-height: 100%;
 
   // CSS 变量：文件卡片宽度
   --file-card-width: 300px;
