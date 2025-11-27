@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <AppHeader />
+    <AppHeader>
+      <template #menu>
+        <slot name="header-menu" />
+      </template>
+    </AppHeader>
     <slot />
   </div>
 </template>

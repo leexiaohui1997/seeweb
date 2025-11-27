@@ -47,6 +47,7 @@ definePageMeta({
 
 const { fetchUser } = await useUser()
 
+const route = useRoute()
 const router = useRouter()
 
 const formValues = reactive({
@@ -117,7 +118,7 @@ const handleSubmit = async () => {
     ElMessage.success(response.message)
     disabled.value = true
     await fetchUser()
-    router.replace({ path: '/' })
+    router.replace({ path: (route.query.redirect as string) || '/' })
   } catch (error) {
     ElMessage.error(getErrorMessage(error))
     // 登录失败后刷新验证码
