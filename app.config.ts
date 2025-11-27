@@ -10,5 +10,10 @@ export default defineAppConfig({
       icon: 'Files',
       path: '/workspace/apps',
     },
+    {
+      label: '资源',
+      icon: 'Folder',
+      path: '/workspace/assets',
+    },
   ],
 })

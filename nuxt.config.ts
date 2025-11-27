@@ -26,6 +26,21 @@ export default defineNuxtConfig({
     },
     jwtSecret: process.env.JWT_SECRET || 'your-secret-key-change-in-production',
     sessionSecret: process.env.SESSION_SECRET || 'your-session-secret-change-in-production',
+    fileUpload: {
+      maxSize: parseInt(process.env.FILE_UPLOAD_MAX_SIZE || '10485760'), // 10MB
+      mimeTypeWhitelist: process.env.FILE_UPLOAD_MIME_TYPE_WHITELIST
+        ? process.env.FILE_UPLOAD_MIME_TYPE_WHITELIST.split(',')
+        : [],
+      mimeTypeBlacklist: process.env.FILE_UPLOAD_MIME_TYPE_BLACKLIST
+        ? process.env.FILE_UPLOAD_MIME_TYPE_BLACKLIST.split(',')
+        : [],
+      extWhitelist: process.env.FILE_UPLOAD_EXT_WHITELIST
+        ? process.env.FILE_UPLOAD_EXT_WHITELIST.split(',')
+        : [],
+      extBlacklist: process.env.FILE_UPLOAD_EXT_BLACKLIST
+        ? process.env.FILE_UPLOAD_EXT_BLACKLIST.split(',')
+        : [],
+    },
     // 公共配置（客户端和服务端都可用）
     public: {
       // 可以在这里添加公共配置

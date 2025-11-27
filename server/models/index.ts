@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize'
 import type { RuntimeConfig } from '../types/runtime-config'
 import { User } from './User'
 import { App } from './App'
+import { File } from './File'
 
 let sequelize: Sequelize | null = null
 
@@ -37,6 +38,17 @@ export function initModelAssociations(): void {
   })
 
   App.belongsTo(User, {
+    foreignKey: 'userId',
+    as: 'user',
+  })
+
+  // User 和 File 的关联关系
+  User.hasMany(File, {
+    foreignKey: 'userId',
+    as: 'files',
+  })
+
+  File.belongsTo(User, {
     foreignKey: 'userId',
     as: 'user',
   })
