@@ -1,10 +1,11 @@
 import { createPool } from 'mysql2/promise'
 import type { Pool } from 'mysql2/promise'
+import type { RuntimeConfig } from '../types/runtime-config'
 
 let pool: Pool | null = null
 
 export function getDatabase(): Pool {
-  const config = useRuntimeConfig()
+  const config = useRuntimeConfig() as unknown as RuntimeConfig
 
   if (!pool) {
     pool = createPool({
