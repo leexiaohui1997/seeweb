@@ -1,16 +1,18 @@
 <template>
   <div class="panel">
     <div class="panel-top">
-      <span class="panel-top-title">{{ type }}</span>
-      <div class="panel-top-actions">
-        <el-button
-          v-show="!dialogVisible"
-          type="primary"
-          size="small"
-          :icon="Edit"
-          link
-          @click="dialogVisible = true"
-        />
+      <div class="panel-top-left">
+        <span class="panel-top-title">{{ typeLabel }}</span>
+        <div class="panel-top-actions">
+          <el-button
+            v-show="!dialogVisible"
+            type="primary"
+            size="small"
+            :icon="Edit"
+            link
+            @click="dialogVisible = true"
+          />
+        </div>
       </div>
     </div>
     <div class="panel-content">
@@ -24,33 +26,35 @@
     </div>
   </div>
 
-  <el-dialog
-    v-model="dialogVisible"
-    width="90%"
-    top="5vh"
-    :modal="false"
-    draggable
-    modal-penetrable
-  >
-    <div class="panel wrapper">
-      <div class="panel-top">
-        <span class="panel-top-title">{{ type }}</span>
+  <div>
+    <el-dialog
+      v-model="dialogVisible"
+      width="1000px"
+      top="5vh"
+      :modal="false"
+      draggable
+      modal-penetrable
+    >
+      <div class="panel wrapper">
+        <div class="panel-top">
+          <span class="panel-top-title">{{ typeLabel }}</span>
+        </div>
+        <div class="panel-content">
+          <EditorMonacoEditor
+            :key="`dialog-${type}`"
+            :model-value="codeValue"
+            :language="editorLanguage"
+            :theme="editorTheme"
+            @update:model-value="handleCodeChange"
+          />
+        </div>
       </div>
-      <div class="panel-content">
-        <EditorMonacoEditor
-          :key="`dialog-${type}`"
-          :model-value="codeValue"
-          :language="editorLanguage"
-          :theme="editorTheme"
-          @update:model-value="handleCodeChange"
-        />
-      </div>
-    </div>
 
-    <template #header>
-      <span>编辑 {{ type }} 代码</span>
-    </template>
-  </el-dialog>
+      <template #header>
+        <span>编辑{{ typeLabel }}</span>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -64,6 +68,14 @@ const props = defineProps<{
 const emit = defineEmits<{
   'update:modelValue': [value: string]
 }>()
+
+const typeLabel = computed(() => {
+  return {
+    template: '模板',
+    script: '脚本',
+    style: '样式',
+  }[props.type]
+})
 
 const dialogVisible = ref(false)
 const codeValue = ref(props.modelValue || '')
@@ -119,6 +131,12 @@ watch(
     &-title {
       color: $primary-color;
     }
+
+    &-left {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
   }
 
   &-content {
@@ -133,9 +151,6 @@ watch(
   max-height: 900px;
   display: flex;
   flex-direction: column;
-  .panel-top {
-    justify-content: center;
-  }
 }
 
 :deep(.el-dialog) {

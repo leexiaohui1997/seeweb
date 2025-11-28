@@ -5,10 +5,10 @@
         <EditorCodePanel type="template" />
       </el-splitter-panel>
       <el-splitter-panel collapsible>
-        <EditorCodePanel type="script" />
+        <EditorCodePanel type="style" />
       </el-splitter-panel>
       <el-splitter-panel collapsible>
-        <EditorCodePanel type="style" />
+        <EditorCodePanel type="script" />
       </el-splitter-panel>
     </el-splitter>
   </div>
