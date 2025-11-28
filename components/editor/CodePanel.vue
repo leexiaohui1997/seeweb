@@ -141,6 +141,9 @@ watch(
 
   &-content {
     flex: 1;
+    height: 0;
+    position: relative;
+    overflow: hidden;
   }
 }
 

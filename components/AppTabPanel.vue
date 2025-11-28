@@ -120,9 +120,10 @@ const handleNavItemClick = (index: number) => {
 
     .inner {
       flex: 1;
-      padding: 0 16px 16px;
+      height: 0;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
   }
 }
