@@ -16,7 +16,9 @@
           <el-splitter-panel>
             <el-splitter layout="vertical">
               <!-- 主区域 -->
-              <el-splitter-panel></el-splitter-panel>
+              <el-splitter-panel>
+                <EditorDevicePreview />
+              </el-splitter-panel>
               <!-- 底部 -->
               <el-splitter-panel :min="200" collapsible>
                 <AppTabPanel
