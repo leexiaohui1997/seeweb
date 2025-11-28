@@ -1,8 +1,9 @@
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "module": "ES2022",
-    "target": "ES2022"
+    "module": "es2022",
+    "target": "es2022",
+    "forceConsistentCasingInFileNames": false
   },
   "vueCompilerOptions": {
     "globalTypesPath": "./.nuxt/components.d.ts"

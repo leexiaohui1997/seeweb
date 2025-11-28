@@ -12,7 +12,29 @@
     <div v-loading="loading" class="app-editor-content">
       <el-empty v-if="!loading && !app" description="应用不存在或无权限访问" />
       <div v-else-if="app" class="content-placeholder">
-        <!-- 预留空间，暂不实现具体内容 -->
+        <el-splitter>
+          <el-splitter-panel>
+            <el-splitter layout="vertical">
+              <!-- 主区域 -->
+              <el-splitter-panel></el-splitter-panel>
+              <!-- 底部 -->
+              <el-splitter-panel :min="200" collapsible>
+                <AppTabPanel
+                  :items="[
+                    {
+                      name: 'code',
+                      icon: 'Document',
+                      label: '代码',
+                      component: EditorCode,
+                    },
+                  ]"
+                />
+              </el-splitter-panel>
+            </el-splitter>
+          </el-splitter-panel>
+          <!-- 右侧 -->
+          <el-splitter-panel :size="300" :min="300" collapsible></el-splitter-panel>
+        </el-splitter>
       </div>
     </div>
   </div>
@@ -21,6 +43,7 @@
 <script setup lang="ts">
 import { ArrowLeft } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+import { EditorCode } from '#components'
 import type { App } from '~/shared/types/app'
 import { getErrorMessage } from '~/shared/utils/common'
 
@@ -34,11 +57,11 @@ const router = useRouter()
 // 响应式数据
 const loading = ref(false)
 const app = useState<App | null>('app', () => null)
+const appName = computed(() => route.params.name as string)
 
 // 获取应用信息
 const fetchApp = async () => {
-  const appName = route.params.name as string
-  if (!appName) {
+  if (!appName.value) {
     ElMessage.error('应用标识不能为空')
     return
   }
@@ -49,7 +72,7 @@ const fetchApp = async () => {
       success: boolean
       message: string
       data: App
-    }>(`/api/user/apps/name/${appName}`, {
+    }>(`/api/user/apps/name/${appName.value}`, {
       method: 'GET',
     })
 
@@ -73,8 +96,15 @@ const handleBack = () => {
   router.back()
 }
 
-// 初始化加载
-await callOnce(fetchApp)
+watch(
+  appName,
+  () => {
+    fetchApp()
+  },
+  {
+    immediate: true,
+  }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -115,8 +145,12 @@ await callOnce(fetchApp)
     flex-direction: column;
 
     .content-placeholder {
+      --el-border-color-light: #{rgba($primary-color, 0.1)};
       flex: 1;
-      // 预留空间，暂不实现具体内容
+    }
+
+    .el-splitter {
+      overflow: hidden;
     }
   }
 }
