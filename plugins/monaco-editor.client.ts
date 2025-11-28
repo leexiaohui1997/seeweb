@@ -1,29 +1,54 @@
+/* eslint-disable new-cap */
 /**
  * Monaco Editor 客户端插件
- * 配置 Monaco Editor 的 Worker 路径
+ * 配置 Monaco Editor 的 Worker
+ * 使用 getWorker 方法直接导入 worker，让 Vite 自动处理路径
  */
 export default defineNuxtPlugin(() => {
   if (typeof window === 'undefined') return
 
-  // 统一使用 CDN 作为 worker 路径，避免开发环境中的路径问题
-  // 这样可以确保在所有环境中都能正常工作，且性能稳定
-  const basePath = 'https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/esm/vs'
-
+  // 使用 getWorker 方法直接导入 worker 模块
+  // Vite 会自动处理这些导入，确保 worker 通过开发服务器正确加载
   window.MonacoEnvironment = {
-    getWorkerUrl(_moduleId: string, label: string) {
-      if (label === 'json') {
-        return `${basePath}/language/json/json.worker.js`
+    getWorker(_moduleId: string, label: string) {
+      // 动态导入 worker 模块，使用 Vite 的 ?worker 后缀
+      const getWorkerModule = () => {
+        switch (label) {
+          case 'json':
+            return import(
+              /* @vite-ignore */
+              'monaco-editor/esm/vs/language/json/json.worker?worker'
+            ).then(module => new module.default())
+          case 'css':
+          case 'scss':
+          case 'less':
+            return import(
+              /* @vite-ignore */
+              'monaco-editor/esm/vs/language/css/css.worker?worker'
+            ).then(module => new module.default())
+          case 'html':
+          case 'handlebars':
+          case 'razor':
+            return import(
+              /* @vite-ignore */
+              'monaco-editor/esm/vs/language/html/html.worker?worker'
+            ).then(module => new module.default())
+          case 'typescript':
+          case 'javascript':
+            return import(
+              /* @vite-ignore */
+              'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
+            ).then(module => new module.default())
+          default:
+            return import(
+              /* @vite-ignore */
+              'monaco-editor/esm/vs/editor/editor.worker?worker'
+            ).then(module => new module.default())
+        }
       }
-      if (label === 'css' || label === 'scss' || label === 'less') {
-        return `${basePath}/language/css/css.worker.js`
-      }
-      if (label === 'html' || label === 'handlebars' || label === 'razor') {
-        return `${basePath}/language/html/html.worker.js`
-      }
-      if (label === 'typescript' || label === 'javascript') {
-        return `${basePath}/language/typescript/ts.worker.js`
-      }
-      return `${basePath}/editor/editor.worker.js`
+
+      // Monaco Editor 支持返回 Promise<Worker>
+      return getWorkerModule() as any
     },
   }
 })

@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import monacoEditorPlugin from 'vite-plugin-monaco-editor'
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
@@ -48,6 +50,12 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    plugins: [
+      monacoEditorPlugin({
+        // 配置需要启用的语言 worker
+        languageWorkers: ['editorWorkerService', 'typescript', 'json', 'css', 'html'],
+      }),
+    ],
     css: {
       preprocessorOptions: {
         scss: {

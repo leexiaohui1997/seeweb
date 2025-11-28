@@ -81,6 +81,7 @@ const initEditor = async () => {
       suggestOnTriggerCharacters: true,
       acceptSuggestionOnCommitCharacter: true,
       snippetSuggestions: 'top',
+      fixedOverflowWidgets: true,
     })
 
     // 监听内容变化
