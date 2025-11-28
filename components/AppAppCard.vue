@@ -71,7 +71,7 @@ const handleCopy = async () => {
 
 // 打开应用
 const handleOpen = () => {
-  navigateTo('/')
+  navigateTo(`/workspace/app/${props.app.name}`)
 }
 
 // 编辑应用
