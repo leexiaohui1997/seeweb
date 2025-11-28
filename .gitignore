@@ -5,6 +5,9 @@
 .cache
 dist
 
+# Sandbox build output
+public/sandbox
+
 # Node dependencies
 node_modules
 
