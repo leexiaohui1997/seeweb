@@ -3,6 +3,7 @@ import type { RuntimeConfig } from '../types/runtime-config'
 import { User } from './User'
 import { App } from './App'
 import { File } from './File'
+import { Code } from './Code'
 
 let sequelize: Sequelize | null = null
 
@@ -51,6 +52,50 @@ export function initModelAssociations(): void {
   File.belongsTo(User, {
     foreignKey: 'userId',
     as: 'user',
+  })
+
+  // User 和 Code 的关联关系
+  User.hasMany(Code, {
+    foreignKey: 'userId',
+    as: 'codes',
+  })
+
+  Code.belongsTo(User, {
+    foreignKey: 'userId',
+    as: 'user',
+  })
+
+  // App 和 Code 的关联关系
+  App.hasOne(Code, {
+    foreignKey: 'appId',
+    as: 'templateCode',
+    constraints: false,
+  })
+
+  App.hasOne(Code, {
+    foreignKey: 'id',
+    sourceKey: 'templateCodeId',
+    as: 'templateCodeRef',
+    constraints: false,
+  })
+
+  App.hasOne(Code, {
+    foreignKey: 'id',
+    sourceKey: 'styleCodeId',
+    as: 'styleCodeRef',
+    constraints: false,
+  })
+
+  App.hasOne(Code, {
+    foreignKey: 'id',
+    sourceKey: 'scriptCodeId',
+    as: 'scriptCodeRef',
+    constraints: false,
+  })
+
+  Code.belongsTo(App, {
+    foreignKey: 'appId',
+    as: 'app',
   })
 }
 

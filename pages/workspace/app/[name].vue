@@ -1,5 +1,5 @@
 <template>
-  <div class="app-editor-page">
+  <div v-loading="loading" class="app-editor-page">
     <!-- 头部区域 -->
     <div class="app-editor-header">
       <div class="header-left">
@@ -9,7 +9,7 @@
     </div>
 
     <!-- 内容区 -->
-    <div v-loading="loading" class="app-editor-content">
+    <div class="app-editor-content">
       <el-empty v-if="!loading && !app" description="应用不存在或无权限访问" />
       <div v-else-if="app" class="content-placeholder">
         <el-splitter>
@@ -26,6 +26,12 @@
                       icon: 'Document',
                       label: '代码',
                       component: EditorCode,
+                      props: {
+                        appId: app?.id,
+                        templateCode: app?.templateCode,
+                        styleCode: app?.styleCode,
+                        scriptCode: app?.scriptCode,
+                      },
                     },
                   ]"
                 />

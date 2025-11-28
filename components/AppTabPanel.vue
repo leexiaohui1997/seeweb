@@ -27,7 +27,7 @@
         <component
           :is="items[currentIndex].component"
           v-bind="items[currentIndex].props"
-          v-on="items[currentIndex].emits"
+          v-on="items[currentIndex].emits || {}"
         />
       </div>
     </div>

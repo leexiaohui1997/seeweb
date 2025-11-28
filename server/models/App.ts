@@ -7,6 +7,9 @@ interface AppAttributes {
   name: string
   title: string
   userId: number
+  templateCodeId?: number | null
+  styleCodeId?: number | null
+  scriptCodeId?: number | null
   deletedAt?: Date | null
   createdAt?: Date
   updatedAt?: Date
@@ -20,6 +23,9 @@ export class App extends Model<AppAttributes, AppCreationAttributes> implements 
   declare name: string
   declare title: string
   declare userId: number
+  declare templateCodeId: number | null
+  declare styleCodeId: number | null
+  declare scriptCodeId: number | null
   declare deletedAt: Date | null
   declare readonly createdAt: Date
   declare readonly updatedAt: Date
@@ -56,6 +62,33 @@ export function initAppModel(): void {
         field: 'user_id',
         references: {
           model: 'users',
+          key: 'id',
+        },
+      },
+      templateCodeId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'template_code_id',
+        references: {
+          model: 'codes',
+          key: 'id',
+        },
+      },
+      styleCodeId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'style_code_id',
+        references: {
+          model: 'codes',
+          key: 'id',
+        },
+      },
+      scriptCodeId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'script_code_id',
+        references: {
+          model: 'codes',
           key: 'id',
         },
       },

@@ -2,6 +2,7 @@ import { verifyToken } from '~/server/utils/jwt'
 import { initUserModel, User } from '~/server/models/User'
 import { initAppModel } from '~/server/models/App'
 import { initFileModel } from '~/server/models/File'
+import { initCodeModel } from '~/server/models/Code'
 import { initModelAssociations } from '~/server/models/index'
 
 // 配置需要鉴权的路由（参考前端实现方式）
@@ -11,6 +12,7 @@ const authRoutes = [/^\/api\/user(\/.*)*$/]
 initUserModel()
 initAppModel()
 initFileModel()
+initCodeModel()
 initModelAssociations()
 
 /**
