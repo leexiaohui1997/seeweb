@@ -56,5 +56,23 @@ export default defineNuxtConfig({
         },
       },
     },
+    optimizeDeps: {
+      include: ['monaco-editor'],
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'monaco-editor': ['monaco-editor'],
+          },
+        },
+      },
+    },
+    server: {
+      fs: {
+        // 允许访问 node_modules 中的文件（如果需要）
+        allow: ['..'],
+      },
+    },
   },
 })

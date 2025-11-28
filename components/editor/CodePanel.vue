@@ -14,39 +14,91 @@
       </div>
     </div>
     <div class="panel-content">
-      <ClientOnly>
-        <Teleport :to="wrapperRef" :disabled="!dialogVisible || !wrapperRef">
-          <div></div>
-        </Teleport>
-      </ClientOnly>
+      <EditorMonacoEditor
+        v-if="!dialogVisible"
+        :model-value="codeValue"
+        :language="editorLanguage"
+        :theme="editorTheme"
+        @update:model-value="handleCodeChange"
+      />
     </div>
   </div>
 
-  <div>
-    <el-dialog v-model="dialogVisible" width="800px" :modal="false" draggable modal-penetrable>
-      <div class="panel wrapper">
-        <div class="panel-top">
-          <span class="panel-top-title">{{ type }}</span>
-        </div>
-        <div ref="wrapperRef" class="panel-content"></div>
+  <el-dialog
+    v-model="dialogVisible"
+    width="90%"
+    top="5vh"
+    :modal="false"
+    draggable
+    modal-penetrable
+  >
+    <div class="panel wrapper">
+      <div class="panel-top">
+        <span class="panel-top-title">{{ type }}</span>
       </div>
+      <div class="panel-content">
+        <EditorMonacoEditor
+          :key="`dialog-${type}`"
+          :model-value="codeValue"
+          :language="editorLanguage"
+          :theme="editorTheme"
+          @update:model-value="handleCodeChange"
+        />
+      </div>
+    </div>
 
-      <template #header>
-        <span>编辑代码</span>
-      </template>
-    </el-dialog>
-  </div>
+    <template #header>
+      <span>编辑 {{ type }} 代码</span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { Edit } from '@element-plus/icons-vue'
 
-defineProps<{
+const props = defineProps<{
   type: 'template' | 'script' | 'style'
+  modelValue?: string
+}>()
+
+const emit = defineEmits<{
+  'update:modelValue': [value: string]
 }>()
 
 const dialogVisible = ref(false)
-const wrapperRef = ref<HTMLDivElement>()
+const codeValue = ref(props.modelValue || '')
+
+// 根据 type 映射到 Monaco Editor 语言
+const editorLanguage = computed(() => {
+  const languageMap: Record<'template' | 'script' | 'style', string> = {
+    template: 'html',
+    script: 'typescript',
+    style: 'scss',
+  }
+  return languageMap[props.type]
+})
+
+// 编辑器主题（可以根据系统主题动态调整）
+const editorTheme = computed(() => {
+  // 可以根据需要切换主题：'vs' | 'vs-dark' | 'hc-black'
+  return 'vs'
+})
+
+// 处理代码变化
+const handleCodeChange = (value: string) => {
+  codeValue.value = value
+  emit('update:modelValue', value)
+}
+
+// 监听外部值变化
+watch(
+  () => props.modelValue,
+  newValue => {
+    if (newValue !== undefined && newValue !== codeValue.value) {
+      codeValue.value = newValue
+    }
+  }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -76,7 +128,9 @@ const wrapperRef = ref<HTMLDivElement>()
 
 .wrapper {
   width: 100%;
-  height: 600px;
+  height: 80vh;
+  min-height: 600px;
+  max-height: 900px;
   display: flex;
   flex-direction: column;
   .panel-top {
